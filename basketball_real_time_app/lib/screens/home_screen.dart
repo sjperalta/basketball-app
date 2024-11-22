@@ -1,3 +1,4 @@
+import 'package:basketball_real_time_app/widgets/shotclock_widget.dart';
 import 'package:flutter/material.dart';
 import '../models/team.dart';
 import '../widgets/scoreboard_widget.dart';
@@ -11,29 +12,28 @@ class MarcadorHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double halfScreenHeight = MediaQuery.of(context).size.height * 0.5;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Marcador en Tiempo Real'),
-        centerTitle: true,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Flex(
+        direction: Axis.vertical, // Horizontal layout
         children: [
           // Widget del Cronómetro
-          TimerWidget(gameService: gameService),
-          SizedBox(height: 20),
+          SizedBox(
+            height: halfScreenHeight,
+            child: TimerWidget(gameService: gameService, teamA: teamA, teamB: teamB)
+          ),
           // Marcador de los equipos
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              // Pasa el equipo A al widget de marcador
-              Expanded(
-                child: BasketballScoreboard(team: teamA), // Equipo A
-              ),
-              Expanded(
-                child: BasketballScoreboard(team: teamB), // Equipo B
-              ),
-            ],
+          Expanded(
+            flex: 2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // Pasa el equipo A al widget de marcador
+                BasketballScoreboard(team: teamA), // Equipo A
+                ShotClockWidget(initialTime: 24), // ShotClock
+                BasketballScoreboard(team: teamB), // Equipo B
+              ],
+            ),
           ),
         ],
       ),

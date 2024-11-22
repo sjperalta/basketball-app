@@ -3,14 +3,14 @@ import 'dart:async';
 class GameService {
   int currentQuarter = 1;
   final int totalQuarters = 4;
-  Duration quarterDuration = Duration(minutes: 12);
+  Duration quarterDuration = const Duration(minutes: 12);
   Timer? gameTimer;
   int timeLeftInSeconds = 12 * 60; // 12 minutos por cuarto
   bool gameEnded = false;
 
   // Iniciar cronómetro
   void startTimer(Function onTimeUpdate, Function onQuarterEnd, Function onGameEnd) {
-    gameTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    gameTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (timeLeftInSeconds > 0) {
         onTimeUpdate(timeLeftInSeconds);
         timeLeftInSeconds--;

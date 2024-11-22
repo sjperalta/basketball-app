@@ -1,23 +1,30 @@
+import 'package:flutter/widgets.dart';
+
 class Team {
   String name;
-  int score;
-  int fouls; // Nuevo campo para contar faltas
+  ValueNotifier<int> score = ValueNotifier<int>(0);
+  ValueNotifier<int> fouls = ValueNotifier<int>(0);  // Nuevo campo para contar faltas
 
-  Team({required this.name, this.score = 0, this.fouls = 0});
+  Team({required this.name });
 
   void addPoints(int points) {
-    score += points;
+    score.value += points;
   }
 
   void removePoints(int points) {
-    score = (score - points >= 0) ? score - points : 0;  // Evitar puntaje negativo
+    score.value = (score.value - points >= 0) ? score.value - points : 0;  // Evitar puntaje negativo
   }
 
   void addFoul() {
-    fouls += 1;
+    fouls.value += 1;
   }
 
   void removeFoul() {
-    fouls = (fouls - 1 >= 0) ? fouls - 1 : 0;  // Evitar faltas negativas
+    fouls.value = (fouls.value - 1 >= 0) ? fouls.value - 1 : 0;  // Evitar faltas negativas
+  }
+
+  void resetScore(){
+    score.value = 0;
+    fouls.value = 0;
   }
 }
